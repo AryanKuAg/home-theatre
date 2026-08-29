@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Atelier Noir designs and builds cinematic home theatres with architectural precision, immersive sound, and perfect picture.',
   icons: {
-    icon: '/favicon.svg',
+    icon: 'favicon.svg',
   },
 };
 
