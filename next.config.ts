@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
   distDir: 'dist',
   // Sites are served from a subpath (/template-sites/<slug>/), not the domain
   // root, so asset URLs must be relative to the page rather than absolute.
-  assetPrefix: './',
+  // Static export only. `next dev` cannot serve a relative asset
+  // prefix — it emits ./_next/... URLs that resolve against the wrong
+  // directory, so nothing hydrates and the page sits on its loader.
+  assetPrefix: process.env.NODE_ENV === 'production' ? './' : undefined,
   // The default image loader needs a server; static export requires this.
   images: { unoptimized: true },
   // Pin the workspace root. Stray lockfiles further up the filesystem
