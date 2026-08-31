@@ -137,8 +137,8 @@ export default function Home() {
   // and may simply never arrive — and without this the site never shows itself
   // at all. Same guard the other templates in this set use.
   useEffect(() => {
-    const film = window.setTimeout(() => setVideoReady(true), Math.max(0, 6000 - performance.now()));
-    const reveal = window.setTimeout(() => setSiteReady(true), Math.max(0, 9000 - performance.now()));
+    const film = window.setTimeout(() => setVideoReady(true), 6000);
+    const reveal = window.setTimeout(() => setSiteReady(true), 9000);
     return () => {
       window.clearTimeout(film);
       window.clearTimeout(reveal);
