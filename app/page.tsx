@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import ScrollyVideoController from 'scrolly-video/dist/ScrollyVideo.js';
 
 const heroVideo =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_3Hcm18Q4PmC8GZzT4D0q8fyTyTL/hf_20260828_184504_8526e187-944b-4cd3-8d47-a5a2bec56ef5.mp4';
+  'https://sites.framerate.space/template-assets/home-theatre/hero.mp4';
 
 class SmoothScrollyVideo extends ScrollyVideoController {
   private lastPaintedFrame = -1;
@@ -131,6 +131,19 @@ export default function Home() {
   const [siteReady, setSiteReady] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const isReady = siteReady && videoReady;
+
+  // Never let the hero strand the page on its loading screen. The film is
+  // fetched over the network, so "ready" depends on the visitor's connection
+  // and may simply never arrive — and without this the site never shows itself
+  // at all. Same guard the other templates in this set use.
+  useEffect(() => {
+    const film = window.setTimeout(() => setVideoReady(true), 6000);
+    const reveal = window.setTimeout(() => setSiteReady(true), 9000);
+    return () => {
+      window.clearTimeout(film);
+      window.clearTimeout(reveal);
+    };
+  }, []);
   const handleVideoReady = useCallback(() => setVideoReady(true), []);
 
   useEffect(() => {
